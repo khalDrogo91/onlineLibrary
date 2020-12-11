@@ -6,10 +6,19 @@ import data from './data/book.json';
 function App() {
 
   const [searchKey, setSearchkey] = useState("");
+  const [finalValue, setFinalValue] = useState("");
+
+
+  const handleSubmit = (evt) => {
+    evt.preventDefault();
+    setFinalValue(searchKey);
+    alert(`Submitting search ${searchKey}`)
+}
+
 
   return (<>
 
-    <div>
+    <form onSubmit={handleSubmit}>
       <h2>Book shell</h2>
 
       <input type='text'
@@ -22,21 +31,19 @@ function App() {
         "borderWidth": "1px", 'borderColor': "#aaaaaa", 'borderStyle': 'solid',
         'border-width': 'medium'
       }}>
-        
+
         <tr>
           <td>Id</td>
           <td> </td>
           <td>Name</td>
         </tr>
-       {
-          data.filter(book => book.Title.includes(searchKey)).map((book, index) =>
-          <tr> <Book key={index} {...book}></Book></tr>
-        )}
+        {
+          data.filter(book => book.Title.includes(finalValue)).map((book, index) =>
+            <tr> <Book key={index} {...book}></Book></tr>
+          )}
       </table>
-
-
-
-    </div>
+      <input type="submit" value="Submit" />
+    </form>
   </>)
 }
 
