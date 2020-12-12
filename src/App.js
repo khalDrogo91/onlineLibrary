@@ -11,7 +11,7 @@ function App() {
 
   const handleSubmit = (evt) => {
     evt.preventDefault();
-    setFinalValue(searchKey);
+    setFinalValue(searchKey.toLowerCase());
     alert(`Submitting search ${searchKey}`)
 }
 
@@ -38,7 +38,8 @@ function App() {
           <td>Name</td>
         </tr>
         {
-          data.filter(book => book.Title.includes(finalValue)).map((book, index) =>
+          data.filter(book => book.Title.includes(finalValue.toLowerCase()))
+          .map((book, index) =>
             <tr> <Book key={index} {...book}></Book></tr>
           )}
       </table>
