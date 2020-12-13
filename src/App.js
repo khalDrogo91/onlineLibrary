@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
-import Book from './component/Book';
-import data from './data/book.json';
 
+import data from './data/book.json';
+import Table from './component/Table';
 
 function App() {
 
@@ -13,36 +13,37 @@ function App() {
     evt.preventDefault();
     setFinalValue(searchKey.toLowerCase());
     alert(`Submitting search ${searchKey}`)
-}
+  }
 
+  const ifPresent = (finalValue) => {
+   // console.log(`value = ${finalValue}`);
+    const result =  data.filter(book => book.Title.toLowerCase().includes(finalValue.toLowerCase()));
+   
+    //console.log(result);
+    
+    if(result.length>0){
+      console.log(` not empty array`);
+      return true;
+   }else{
+    console.log(`empty array`);
+     return false;
+   }
+   // console.log(`value = ${result}`);
+    //return result;
+  }
 
   return (<>
-
     <form onSubmit={handleSubmit}>
       <h2>Book shell</h2>
-
       <input type='text'
         placeholder='Search'
         value={searchKey}
         onChange={e => setSearchkey(e.target.value)}
       />
-
-      <table style={{
-        "borderWidth": "1px", 'borderColor': "#aaaaaa", 'borderStyle': 'solid',
-        'border-width': 'medium'
-      }}>
-
-        <tr>
-          <td>Id</td>
-          <td> </td>
-          <td>Name</td>
-        </tr>
-        {
-          data.filter(book => book.Title.includes(finalValue.toLowerCase()))
-          .map((book, index) =>
-            <tr> <Book key={index} {...book}></Book></tr>
-          )}
-      </table>
+      {ifPresent(finalValue) ? <Table finalValue = {finalValue} > </Table>
+        : <div><>No data</></div>
+      }
+            
       <input type="submit" value="Submit" />
     </form>
   </>)
